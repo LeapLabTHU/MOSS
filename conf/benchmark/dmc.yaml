@@ -1,0 +1,6 @@
+task: quadruped_walk
+obs_type: states # [states, pixels]
+frame_stack: 3
+action_repeat: 1
+seed: ${seed}
+reward_scale: 1.0

@@ -1,0 +1,15 @@
+name: multimodal_cic
+_target_: core.intrinsic.MultimodalCICReward
+lr: 1e-4
+to_jit: true
+temperature: 0.5
+network_cfg:
+  hidden_dim: 1024
+  skill_dim: 32
+  project_skill: true
+knn_entropy_config:
+  knn_clip: 0.0005
+  knn_k: 16
+  knn_avg: true
+  knn_rm: true
+  minus_mean: true

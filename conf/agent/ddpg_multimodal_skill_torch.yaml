@@ -1,0 +1,38 @@
+_target_: core.agents.ddpg_multimodal_skill_torch.DDPGAgentMultiModalSkill
+
+action_type: continuous # [continuous, discrete]
+to_jit: true
+stddev_schedule: 0.2
+stddev_clip: 0.3
+critic_target_tau: 0.01
+l2_weight: 0.0
+#lr_encoder: 1e-4
+lr_actor: 1e-4
+lr_critic: 1e-4
+network_cfg:
+  obs_type: ${benchmark.obs_type}
+  action_shape: ???
+  feature_dim: 50
+  hidden_dim: 1024
+  ln_config:
+    axis: -1
+    create_scale: True
+    create_offset: True
+
+# replay buffer
+replay_buffer_cfg:
+  nstep: 3
+  replay_buffer_size: 1000000
+  batch_size: 1024 #2048 #
+  discount: 0.99
+  num_workers: 4
+  skill_dim: ${intrinsic.network_cfg.skill_dim}
+
+search_mode: grid_search
+skill_mode: half
+partitions: 2 # 4
+reward_free: ${reward_free}
+# additional for skill based DDPG
+skills_cfg:
+  update_skill_every: 50
+  skill_dim: ${intrinsic.network_cfg.skill_dim}

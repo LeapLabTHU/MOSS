@@ -1,0 +1,29 @@
+version: 1
+formatters:
+  simple:
+    format: "[%(asctime)s](%(filename)s %(lineno)d): %(message)s"
+  colored:
+    (): colorlog.ColoredFormatter
+#    format: "[%(cyan)s%(asctime)s%(reset)s][%(purple)sHYDRA%(reset)s] %(message)s"
+    format: '%(green)s[%(asctime)s](%(filename)s %(lineno)d): %(white)s%(message)s'
+handlers:
+  console: # console handler
+    class: logging.StreamHandler
+    level: INFO
+    formatter: colored
+    stream: ext://sys.stdout
+  file: # file handler
+    class: logging.FileHandler
+    formatter: colored
+    level: INFO
+    filename: output.log
+loggers: # parents
+  finetune:
+    level: INFO
+    handlers: [console, file]
+    propagate: no
+root: # default one
+  level: INFO #DEBUG
+  handlers: [console, file]
+
+disable_existing_loggers: false

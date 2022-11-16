@@ -1,0 +1,41 @@
+defaults:
+  - _self_
+  - agent: ddpg_multimodal_skill_torch
+  - intrinsic: multimodal_cic
+  - benchmark: dmc
+  - override hydra/job_logging: custom
+
+
+# mode
+reward_free: false
+
+# train settings
+num_pretrain_frames: 2000000
+num_finetune_frames: 4001 #100000
+num_seed_frames: 4000
+update_every_steps: 2
+
+# eval
+eval_every_frames: 10000
+num_eval_episodes: 10
+
+# wandb
+log_params_to_wandb_every: 100000
+run_id: '1' # used for resuming
+resume: allow
+use_wandb: false
+wandb_note: 'entropy_calc'
+wandb_project_name: unsupervisedRL
+
+# misc
+seed: 0
+save_video: true
+save_train_video: false
+checkpoint: null
+save_dir: checkpoints
+snapshots: [100000, 500000, 1000000, 2000000]
+
+
+hydra:
+  run:
+    dir: is_pretrain_${reward_free}/${benchmark.task}/${seed}/${wandb_note}
